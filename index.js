@@ -1,46 +1,29 @@
 const fetch = require('node-fetch');
-//get the HTML of the homepage
-//card : https://poe.ninja/challenge/divinationcards/the-polymath
-//item : https://poe.ninja/challenge/unique-accessories/astramentis-onyx-amulet
-const cardURL = 'https://poe.ninja/challenge/divinationcards/the-polymath'
-const itemURL = 'https://poe.ninja/challenge/unique-accessories/astramentis-onyx-amulet'
-
-//main function
+// main function
 async function main(){
-  //fetch the item
-  const response = await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueAccessory&language=en')
-  const responseJson = await response.json();
-  //single out item
-  const resultJson = responseJson.lines.filter(item => item.name === 'Astramentis')[0];
+  // fetch the div card
+  const divCardResponseJson = await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=DivinationCard&language=en').then(r => r.json());
+  // single out div card
+  const divCardJson = divCardResponseJson.lines.filter(item => item.name === 'The Polymath')[0];
+  const divCard = {
+    name: divCardJson.name,
+    stackSize: divCardJson.stackSize,
+    chaos: divCardJson.chaosValue
+  };
+  console.log(divCard);
+  // fetch the item
+  const combinedItemResponseJson = await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueAccessory&language=en').then(r => r.json());
+  // single out item
+  const combinedItemJson = combinedItemResponseJson.lines.filter(item => item.name === 'Astramentis')[0];
   const combinedItem = {
-    name: resultJson.name,
-    stackSize: resultJson.stackSize,
-    chaos: resultJson.chaosValue
-  }
-  console.log(combinedItem)
-
-  //fetch the div card
-  fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=DivinationCard&language=en')
-    .then((response) => {
-      return response.json();
-    })
-    .then((responseJson) => {
-      //single out div card
-      const resultJson = responseJson.lines.filter(item => item.name === 'The Polymath')[0];
-      const divCard = {
-        name: resultJson.name,
-        stackSize: resultJson.stackSize,
-        chaos: resultJson.chaosValue
-      }
-      console.log(divCard)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
+    name: combinedItemJson.name,
+    stackSize: combinedItemJson.stackSize,
+    chaos: combinedItemJson.chaosValue
+  };
+  console.log(combinedItem);
+  // calculating profit margins
+  const divCardStackPrice = divCard.stackSize * divCard.chaos;
+  const profitMargin = combinedItem.chaos - divCardStackPrice;
+  console.log(`By flipping ${divCard.name} into ${combinedItem.name} you can make ${profitMargin} chaos.`);
+};
 main();
-
-//div card stack price
-  //div card stacksize * div card chaosValue
-//profit margin
-  //item chaosValue - div card stack price
