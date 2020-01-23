@@ -8,13 +8,20 @@ async function main(){
   const divCard = {
     name: divCardJson.name,
     stackSize: divCardJson.stackSize,
-    chaos: divCardJson.chaosValue
+    chaos: divCardJson.chaosValue,
+    explicitModifiers: divCardJson.explicitModifiers
   };
+//
+  let divString = divCard.explicitModifiers[0].text;
+  let divArray = divString.split('}')[0].split('{');
+  console.log(divArray[0]);
+  console.log(divArray[1]);
+//
   console.log(divCard);
   // fetch the item
   const combinedItemResponseJson = await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueAccessory&language=en').then(r => r.json());
   // single out item
-  const combinedItemJson = combinedItemResponseJson.lines.filter(item => item.name === 'Astramentis')[0];
+  const combinedItemJson = combinedItemResponseJson.lines.filter(item => item.name === divArray[1])[0];
   const combinedItem = {
     name: combinedItemJson.name,
     stackSize: combinedItemJson.stackSize,
