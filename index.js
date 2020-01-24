@@ -28,15 +28,23 @@ async function main(){
     }
   }).filter(Boolean);
   //console.log('uniqueDivCards' , uniqueDivCards);
-  //
-  // fetch the item
+  //https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueMap&language=en
+  //https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueAccessory&language=en
+  // fetch the unique Accessories
   const uniqueAccessories = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueAccessory&language=en').then(r => r.json())).lines;
+  const uniqueMaps = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueMap&language=en').then(r => r.json())).lines;
+  const uniqueFlasks = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueFlask&language=en').then(r => r.json())).lines;
+  const uniqueJewels = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueJewel&language=en').then(r => r.json())).lines;
+  const uniqueArmours = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueArmour&language=en').then(r => r.json())).lines;
+  const uniqueWeapons = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueWeapon&language=en').then(r => r.json())).lines;
+  const uniqueItems = [].concat(uniqueMaps, uniqueFlasks, uniqueJewels, uniqueAccessories, uniqueArmours, uniqueWeapons);
+
   // single out item
-  const uniqueAccessoryJson = uniqueAccessories.forEach(function (uniqueAccessory) {
+  uniqueItems.forEach(function (uniqueItem) {
     const combinedItem = {
-      name: uniqueAccessory.name,
-      stackSize: uniqueAccessory.stackSize,
-      chaos: uniqueAccessory.chaosValue
+      name: uniqueItem.name,
+      stackSize: uniqueItem.stackSize,
+      chaos: uniqueItem.chaosValue
     };
     const matchingUniqueDivCard = uniqueDivCards.find(divCard => divCard.uniqueItem === combinedItem.name);
     if (!matchingUniqueDivCard){
@@ -45,7 +53,7 @@ async function main(){
     // calculating profit margins
     const divCardStackPrice = matchingUniqueDivCard.stackSize * matchingUniqueDivCard.chaos;
     const profitMargin = combinedItem.chaos - divCardStackPrice;
-    console.log(`By flipping ${matchingUniqueDivCard.name} into ${combinedItem.name} you can make ${profitMargin} chaos.`);
+    console.log(`By flipping ${matchingUniqueDivCard.name} into ${combinedItem.name} you can make ${Math.round(profitMargin)} chaos.`);
   });
 };
 main();
