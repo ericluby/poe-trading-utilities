@@ -11,8 +11,8 @@
       <tbody>
         <tr>
           <!-- 7 columns in the table -->
-          <th>Div Card Name</th>
-          <th>Div Card Price</th>
+          <th onclick="clickHandler('matchingUniqueDivCard.name')">Div Card Name</th>
+          <th onclick="clickHandler('matchingUniqueDivCard.chaos')">Div Card Price</th>
           <th>Div Card Stacksize</th>
           <th>Div Card Stack Price</th>
           <th>Item Name</th>
@@ -22,12 +22,26 @@
       </tbody>
     </table>
     <script type="text/javascript">
+      function clickHandler (path){
+        alert("you clicked me!" + path);
+        divCardResponseJson.sort(function (a,b){
+          return a[path] > b[path] ? 1:-1;
+        });
+        renderTable();
+      };
       async function main(){
         const serverURL = "http://localhost:3000/divitems"
-        const divCardResponseJson = await fetch(serverURL).then(res => res.json());
+        divCardResponseJson = await fetch(serverURL).then(res => res.json());
         console.log("divCardResponseJson", divCardResponseJson);
+        renderTable();
+      }
+      function renderTable () {
+        document.body.querySelectorAll(".divCardData")
+        .forEach((element, i) => {
+          element.parentNode.removeChild(element);
+        });
         const rowStrings = divCardResponseJson.map(function(divCardData){
-          const itemRow = `<tr>
+          const itemRow = `<tr class="divCardData">
             <td>${divCardData.matchingUniqueDivCard.name}</td>
             <td>${divCardData.matchingUniqueDivCard.chaos}</td>
             <td>${divCardData.matchingUniqueDivCard.stackSize}</td>
@@ -42,7 +56,7 @@
         tbodyEl.innerHTML += rowStrings.join('\n');
       }
       main();
-
+      let divCardResponseJson = [];
     </script>
   </body>
 </html>
