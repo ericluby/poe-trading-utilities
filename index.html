@@ -8,39 +8,41 @@
     <h1>PoE DivCard Margins</h1>
     <p>Here is a table of Divination Cards and their prices compared to the prices of the items they make.</p>
     <table>
-      <tr>
-        <!-- 8 columns in the table -->
-        <th>Div Card Name</th>
-        <th>Div Card Price</th>
-        <th>Div Card Stacksize</th>
-        <th>Div Card Stack Price</th>
-        <th>Div Card Stacksize</th>
-        <th>Item Name</th>
-        <th>Item Price</th>
-        <th>Profit Margin</th>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Eve</td>
-        <td>Jackson</td>
-        <td>94</td>
-      </tr>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>80</td>
-      </tr>
+      <tbody>
+        <tr>
+          <!-- 7 columns in the table -->
+          <th>Div Card Name</th>
+          <th>Div Card Price</th>
+          <th>Div Card Stacksize</th>
+          <th>Div Card Stack Price</th>
+          <th>Item Name</th>
+          <th>Item Price</th>
+          <th>Profit Margin</th>
+        </tr>
+      </tbody>
     </table>
-    <script type="text/javascript" src="./index.js">
+    <script type="text/javascript">
+      async function main(){
+        const serverURL = "http://localhost:3000/divitems"
+        const divCardResponseJson = await fetch(serverURL).then(res => res.json());
+        console.log("divCardResponseJson", divCardResponseJson);
+        const rowStrings = divCardResponseJson.map(function(divCardData){
+          const itemRow = `<tr>
+            <td>${divCardData.matchingUniqueDivCard.name}</td>
+            <td>${divCardData.matchingUniqueDivCard.chaos}</td>
+            <td>${divCardData.matchingUniqueDivCard.stackSize}</td>
+            <td>${divCardData.divCardStackPrice}</td>
+            <td>${divCardData.combinedItem.name}</td>
+            <td>${divCardData.combinedItem.chaos}</td>
+            <td>${divCardData.profitMargin}</td>
+          </tr>`;
+          return itemRow;
+        });
+        const tbodyEl = document.body.querySelector('tbody');
+        tbodyEl.innerHTML += rowStrings.join('\n');
+      }
+      main();
+
     </script>
   </body>
 </html>
