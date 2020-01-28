@@ -3,56 +3,31 @@ if (typeof window === 'undefined'){
 }; //else we are in a browser
 // main function
 async function getDivCardsAndItems(){
-  return [
-    {
-      "matchingUniqueDivCard": {
-        "name": "The Mayor",
-        "stackSize": 5,
-        "chaos": 19,
-        "explicitModifiers": "<uniqueitem>{The Perandus Manor}",
-        "uniqueItem": "The Perandus Manor"
-      },
-      "combinedItem": {
-        "name": "The Perandus Manor",
-        "stackSize": 0,
-        "chaos": 115
-      },
-      "divCardStackPrice": 95,
-      "profitMargin": 20
-    },
-    {
-      "matchingUniqueDivCard": {
-        "name": "The Professor",
-        "stackSize": 4,
-        "chaos": 6,
-        "explicitModifiers": "<uniqueitem>{The Putrid Cloister}",
-        "uniqueItem": "The Putrid Cloister"
-      },
-      "combinedItem": {
-        "name": "The Putrid Cloister",
-        "stackSize": 0,
-        "chaos": 60
-      },
-      "divCardStackPrice": 24,
-      "profitMargin": 36
-    },
-    {
-      "matchingUniqueDivCard": {
-        "name": "The Landing",
-        "stackSize": 5,
-        "chaos": 9,
-        "explicitModifiers": "<uniqueitem>{The Beachhead}\n<default>{Map Tier:} <normal>{15}\n<corrupted>{Corrupted}",
-        "uniqueItem": "The Beachhead"
-      },
-      "combinedItem": {
-        "name": "The Beachhead",
-        "stackSize": 0,
-        "chaos": 56
-      },
-      "divCardStackPrice": 44,
-      "profitMargin": 12
-    }
-  ] // sample data to delete later
+  return [{
+    cardName: "The Mayor",
+    cardChaos: 18,
+    cardStack: 5,
+    itemName: "The Perandus Manor",
+    itemChaos: 115,
+    stackChaos: 90,
+    profitMargin: 25
+  }, {
+    cardName: "The Professor",
+    cardChaos: 7,
+    cardStack: 4,
+    itemName: "The Putrid Cloister",
+    itemChaos: 68,
+    stackChaos: 28,
+    profitMargin: 40
+  }, {
+    cardName: "The Landing",
+    cardChaos: 9,
+    cardStack: 5,
+    itemName: "The Beachhead",
+    itemChaos: 60,
+    stackChaos: 45,
+    profitMargin: 15
+  }] // sample data to delete later
   // fetch the div card
   const divCardResponseJson = await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=DivinationCard&language=en').then(r => r.json());
   // single out div card
@@ -103,10 +78,12 @@ async function getDivCardsAndItems(){
     const divCardStackPrice = Math.round(matchingUniqueDivCard.stackSize * matchingUniqueDivCard.chaos);
     const profitMargin = combinedItem.chaos - divCardStackPrice;
     const cardAndItemData = {
-      matchingUniqueDivCard,
-      combinedItem.name,
-      combinedItem.stackSize,
-      divCardStackPrice,
+      cardName: matchingUniqueDivCard.name,
+      cardChaos: matchingUniqueDivCard.chaos,
+      cardStack: matchingUniqueDivCard.stackSize,
+      itemName: combinedItem.name,
+      itemChaos: combinedItem.chaos,
+      stackChaos: divCardStackPrice,
       profitMargin
     };
     return cardAndItemData;

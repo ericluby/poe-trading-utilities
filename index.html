@@ -11,21 +11,21 @@
       <tbody>
         <tr>
           <!-- 7 columns in the table -->
-          <th onclick="clickHandler('matchingUniqueDivCard.name')">Div Card Name</th>
-          <th onclick="clickHandler('matchingUniqueDivCard.chaos')">Div Card Price</th>
-          <th>Div Card Stacksize</th>
-          <th>Div Card Stack Price</th>
-          <th>Item Name</th>
-          <th>Item Price</th>
-          <th>Profit Margin</th>
+          <th onclick="sortBy('cardName')">Div Card Name</th>
+          <th onclick="sortBy('cardChaos')">Div Card Price</th>
+          <th onclick="sortBy('cardStack')">Div Card Stacksize</th>
+          <th onclick="sortBy('stackChaos')">Div Card Stack Price</th>
+          <th onclick="sortBy('itemName')">Item Name</th>
+          <th onclick="sortBy('itemChaos')">Item Price</th>
+          <th onclick="sortBy('profitMargin')">Profit Margin</th>
         </tr>
       </tbody>
     </table>
     <script type="text/javascript">
-      function clickHandler (path){
-        alert("you clicked me!" + path);
+      function sortBy (key){
+        alert("you clicked me!" + key);
         divCardResponseJson.sort(function (a,b){
-          return a[path] > b[path] ? 1:-1;
+          return a[key] > b[key] ? 1:-1;
         });
         renderTable();
       };
@@ -42,12 +42,12 @@
         });
         const rowStrings = divCardResponseJson.map(function(divCardData){
           const itemRow = `<tr class="divCardData">
-            <td>${divCardData.matchingUniqueDivCard.name}</td>
-            <td>${divCardData.matchingUniqueDivCard.chaos}</td>
-            <td>${divCardData.matchingUniqueDivCard.stackSize}</td>
-            <td>${divCardData.divCardStackPrice}</td>
-            <td>${divCardData.combinedItem.name}</td>
-            <td>${divCardData.combinedItem.chaos}</td>
+            <td>${divCardData.cardName}</td>
+            <td>${divCardData.cardChaos}</td>
+            <td>${divCardData.cardStack}</td>
+            <td>${divCardData.stackChaos}</td>
+            <td>${divCardData.itemName}</td>
+            <td>${divCardData.itemChaos}</td>
             <td>${divCardData.profitMargin}</td>
           </tr>`;
           return itemRow;
