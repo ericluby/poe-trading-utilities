@@ -4,6 +4,7 @@ if (typeof window === 'undefined'){
 // main function
 async function getDivCardsAndItems(){
   return [{
+    id: 0,
     cardName: "The Mayor",
     cardChaos: 18,
     cardStack: 5,
@@ -12,6 +13,7 @@ async function getDivCardsAndItems(){
     stackChaos: 90,
     profitMargin: 25
   }, {
+    id: 1,
     cardName: "The Professor",
     cardChaos: 7,
     cardStack: 4,
@@ -20,6 +22,7 @@ async function getDivCardsAndItems(){
     stackChaos: 28,
     profitMargin: 40
   }, {
+    id: 2,
     cardName: "The Landing",
     cardChaos: 9,
     cardStack: 5,
@@ -39,7 +42,8 @@ async function getDivCardsAndItems(){
         name: item.name,
         stackSize: item.stackSize,
         chaos: Math.round(item.chaosValue),
-        explicitModifiers: item.explicitModifiers[0].text
+        explicitModifiers: item.explicitModifiers[0].text,
+        divCardRaw: item
       };
       let divString = divCard.explicitModifiers;
       let divArray = divString.split('}')[0].split('{'); //index 0 = <uniqueitem>, index 1 = item name
@@ -64,7 +68,7 @@ async function getDivCardsAndItems(){
   const uniqueItems = [].concat(uniqueMaps, uniqueFlasks, uniqueJewels, uniqueAccessories, uniqueArmours, uniqueWeapons);
 
   // single out item
-  const cardAndItemDatas = uniqueItems.map(function (uniqueItem) {
+  const cardAndItemDatas = uniqueItems.map(function (uniqueItem, index) {
     const combinedItem = {
       name: uniqueItem.name,
       stackSize: uniqueItem.stackSize,
@@ -78,13 +82,16 @@ async function getDivCardsAndItems(){
     const divCardStackPrice = Math.round(matchingUniqueDivCard.stackSize * matchingUniqueDivCard.chaos);
     const profitMargin = combinedItem.chaos - divCardStackPrice;
     const cardAndItemData = {
+      id: index,
       cardName: matchingUniqueDivCard.name,
       cardChaos: matchingUniqueDivCard.chaos,
       cardStack: matchingUniqueDivCard.stackSize,
       itemName: combinedItem.name,
       itemChaos: combinedItem.chaos,
       stackChaos: divCardStackPrice,
-      profitMargin
+      profitMargin,
+      cardRaw: matchingUniqueDivCard.divCardRaw,
+      itemRaw: uniqueItem
     };
     return cardAndItemData;
     // console.log(`By flipping ${matchingUniqueDivCard.name} into ${combinedItem.name} you can make ${Math.round(profitMargin)} chaos.`);

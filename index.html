@@ -33,6 +33,7 @@
       </tbody>
     </table>
     <script type="text/javascript">
+      let sortingByKey = "";
       function search (theEvent){
         console.log(theEvent.target.value);
         divCardResponseJson.forEach(function hideFromSearch(divCardData){
@@ -46,11 +47,23 @@
         });
         renderTable();
       };
+      function logJsons (id){
+        const divCardData = divCardResponseJson.find(item => id == item.id);
+        console.log("cardRaw", divCardData.cardRaw, "itemRaw", divCardData.itemRaw);
+      }
       function sortBy (key){
         //alert("you clicked me!" + key);
-        divCardResponseJson.sort(function (a,b){
-          return a[key] > b[key] ? 1:-1;
-        });
+        if(sortingByKey === key){
+          sortingByKey = "";
+          divCardResponseJson.sort(function (a,b){
+            return a[key] < b[key] ? 1:-1;
+          });
+        } else {
+          sortingByKey = key;
+          divCardResponseJson.sort(function (a,b){
+            return a[key] > b[key] ? 1:-1;
+          });
+        }
         renderTable();
       };
       async function main(){
@@ -74,7 +87,7 @@
             return false;
           }
         }).map(function(divCardData){
-          const itemRow = `<tr class="divCardData">
+          const itemRow = `<tr onclick="logJsons(${divCardData.id})" class="divCardData">
             <td>${divCardData.cardName}</td>
             <td>${divCardData.cardChaos}</td>
             <td>${divCardData.cardStack}</td>
