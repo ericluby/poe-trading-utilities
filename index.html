@@ -67,7 +67,7 @@
         renderTable();
       };
       async function main(){
-        const serverURL = "http://localhost:3000/divitems"
+        const serverURL = "/divitems" //http://localhost:3000/divitems
         divCardResponseJson = await fetch(serverURL).then(res => res.json());
         console.log("divCardResponseJson", divCardResponseJson);
         divCardResponseJson.forEach(function addIsHiddenKey(divCardData){
