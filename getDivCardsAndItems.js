@@ -3,34 +3,34 @@ if (typeof window === 'undefined'){
 }; //else we are in a browser
 // main function
 async function getDivCardsAndItems(){
-  return [{
-    id: 0,
-    cardName: "The Mayor",
-    cardChaos: 18,
-    cardStack: 5,
-    itemName: "The Perandus Manor",
-    itemChaos: 115,
-    stackChaos: 90,
-    profitMargin: 25
-  }, {
-    id: 1,
-    cardName: "The Professor",
-    cardChaos: 7,
-    cardStack: 4,
-    itemName: "The Putrid Cloister",
-    itemChaos: 68,
-    stackChaos: 28,
-    profitMargin: 40
-  }, {
-    id: 2,
-    cardName: "The Landing",
-    cardChaos: 9,
-    cardStack: 5,
-    itemName: "The Beachhead",
-    itemChaos: 60,
-    stackChaos: 45,
-    profitMargin: 15
-  }] // sample data to delete later
+  // return [{
+  //   id: 0,
+  //   cardName: "The Mayor",
+  //   cardChaos: 18,
+  //   cardStack: 5,
+  //   itemName: "The Perandus Manor",
+  //   itemChaos: 115,
+  //   stackChaos: 90,
+  //   profitMargin: 25
+  // }, {
+  //   id: 1,
+  //   cardName: "The Professor",
+  //   cardChaos: 7,
+  //   cardStack: 4,
+  //   itemName: "The Putrid Cloister",
+  //   itemChaos: 68,
+  //   stackChaos: 28,
+  //   profitMargin: 40
+  // }, {
+  //   id: 2,
+  //   cardName: "The Landing",
+  //   cardChaos: 9,
+  //   cardStack: 5,
+  //   itemName: "The Beachhead",
+  //   itemChaos: 60,
+  //   stackChaos: 45,
+  //   profitMargin: 15
+  // }] // sample data to delete later
   // fetch the div card
   const divCardResponseJson = await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=DivinationCard&language=en').then(r => r.json());
   // single out div card
