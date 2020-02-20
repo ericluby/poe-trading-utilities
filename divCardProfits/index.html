@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>PoE DivCard Margins</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+      th, td {
+        text-align: center;
+      }
+      tr:nth-child(even) {background-color: #e3e8fd;}
+      tr:hover {background-color: #eaec62;}
+    </style>
+  </head>
+  <body>
+    <h1>PoE DivCard Margins</h1>
+    <p>Here is a table of Divination Cards and their prices compared to the prices of the items they make.</p>
+    <input type="text" onkeyup="search(event)"/>
+    <table>
+      <tbody>
+        <tr>
+          <!-- 7 columns in the table -->
+          <th onclick="sortBy('cardName')">Div Card Name</th>
+          <th onclick="sortBy('cardChaos')">Div Card Price</th>
+          <th onclick="sortBy('cardStack')">Div Card Stacksize</th>
+          <th onclick="sortBy('stackChaos')">Div Card Stack Price</th>
+          <th onclick="sortBy('itemName')">Item Name</th>
+          <th onclick="sortBy('itemChaos')">Item Price</th>
+          <th onclick="sortBy('profitMargin')">Profit Margin</th>
+        </tr>
+      </tbody>
+    </table>
+    <script type="text/javascript">
+      let sortingByKey = "";
+      function search (theEvent){
+        console.log(theEvent.target.value);
+        divCardResponseJson.forEach(function hideFromSearch(divCardData){
+          if (divCardData.cardName.toLowerCase().includes(theEvent.target.value.toLowerCase())){
+            divCardData.isHidden = false;
+          } else if (divCardData.itemName.toLowerCase().includes(theEvent.target.value.toLowerCase())) {
+            divCardData.isHidden = false;
+          } else {
+            divCardData.isHidden = true;
+          };
+        });
+        renderTable();
+      };
+      function logJsons (id){
+        const divCardData = divCardResponseJson.find(item => id == item.id);
+        console.log("cardRaw", divCardData.cardRaw, "itemRaw", divCardData.itemRaw);
+      }
+      function sortBy (key){
+        //alert("you clicked me!" + key);
+        if(sortingByKey === key){
+          sortingByKey = "";
+          divCardResponseJson.sort(function (a,b){
+            return a[key] < b[key] ? 1:-1;
+          });
+        } else {
+          sortingByKey = key;
+          divCardResponseJson.sort(function (a,b){
+            return a[key] > b[key] ? 1:-1;
+          });
+        }
+        renderTable();
+      };
+      async function main(){
+        const serverURL = "/divitems" //http://localhost:3000/divitems
+        divCardResponseJson = await fetch(serverURL).then(res => res.json());
+        console.log("divCardResponseJson", divCardResponseJson);
+        divCardResponseJson.forEach(function addIsHiddenKey(divCardData){
+          divCardData.isHidden = false
+        });
+        renderTable();
+      }
+      function renderTable () {
+        document.body.querySelectorAll(".divCardData")
+        .forEach((element, i) => {
+          element.parentNode.removeChild(element);
+        });
+        const rowStrings = divCardResponseJson.filter(function(divCardData){
+          if (divCardData.isHidden === false) {
+            return true;
+          } else {
+            return false;
+          }
+        }).map(function(divCardData){
+          const itemRow = `<tr onclick="logJsons(${divCardData.id})" class="divCardData">
+            <td>${divCardData.cardName}</td>
+            <td>${divCardData.cardChaos}</td>
+            <td>${divCardData.cardStack}</td>
+            <td>${divCardData.stackChaos}</td>
+            <td>${divCardData.itemName}</td>
+            <td>${divCardData.itemChaos}</td>
+            <td>${divCardData.profitMargin}</td>
+          </tr>`;
+          return itemRow;
+        });
+        const tbodyEl = document.body.querySelector('tbody');
+        tbodyEl.innerHTML += rowStrings.join('\n');
+      }
+      main();
+      let divCardResponseJson = [];
+    </script>
+  </body>
+</html>
