@@ -1,0 +1,16 @@
+{
+  "name": "currencyConverter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "currencyConverter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "alert-node": "^2.1.4",
+    "node-fetch": "^2.6.0"
+  }
+}
