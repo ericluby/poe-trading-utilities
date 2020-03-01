@@ -65,7 +65,8 @@ async function getDivCardsAndItems(){
   const uniqueJewels = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueJewel&language=en').then(r => r.json())).lines;
   const uniqueArmours = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueArmour&language=en').then(r => r.json())).lines;
   const uniqueWeapons = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueWeapon&language=en').then(r => r.json())).lines;
-  const uniqueItems = [].concat(uniqueMaps, uniqueFlasks, uniqueJewels, uniqueAccessories, uniqueArmours, uniqueWeapons);
+  const uniqueItems = [].concat(uniqueMaps, uniqueFlasks, uniqueJewels, uniqueAccessories, uniqueArmours, uniqueWeapons)
+  .filter(item => !item.links) //both undefined and zero are allowed to cancel out 5 and 6 linked items
 
   // single out item
   const cardAndItemDatas = uniqueItems.map(function (uniqueItem, index) {

@@ -1,0 +1,20 @@
+{
+  "name": "poe-trading-utilities",
+  "version": "1.0.0",
+  "description": "- Checks the currency Exalt to Chaos ratio from [poe.ninja](poe.ninja) and given a decimal of an Exalt, reports back the equivalent Chaos value.\r   - to use:\r     1. Open the currencyConverter.AHK file in AutoHotKey\r     2. press the hotkey (default set to f4)\r     3. type in 1 to see the current exalt to chaos ratio OR type in the amount/remainder of exalt to see the chaos equivalent\r     4. press okay and see the equivalent amount of chaos",
+  "scripts": {
+    "start": "node divCardProfits/server.js",
+    "postinstall": "cd divCardProfits/ && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericluby/poe-trading-utilities.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ericluby/poe-trading-utilities/issues"
+  },
+  "homepage": "https://github.com/ericluby/poe-trading-utilities#readme"
+}
