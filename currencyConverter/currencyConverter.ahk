@@ -6,5 +6,4 @@ Run, cmd /k node currencyConverter.js %input%, %A_ScriptDir%, Hide
   ;shell := ComObjCreate("WScript.Shell")
   ;exec := shell.Exec(ComSpec " /C node currencyConverter.js " input)
   ;output := exec.StdOut.ReadAll()
-  ;msgBox, You entered "%output%"
 Return

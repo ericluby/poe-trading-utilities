@@ -32,7 +32,7 @@ async function getDivCardsAndItems(){
   //   profitMargin: 15
   // }] // sample data to delete later
   // fetch the div card
-  const divCardResponseJson = await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=DivinationCard&language=en').then(r => r.json());
+  const divCardResponseJson = await fetch('https://poe.ninja/api/data/itemoverview?league=Delirium&type=DivinationCard&language=en').then(r => r.json());
   // single out div card
   const divCardJson = divCardResponseJson.lines;
   const uniqueDivCards = divCardJson.map(function(item){
@@ -59,12 +59,12 @@ async function getDivCardsAndItems(){
   }).filter(Boolean);
   // console.log('uniqueDivCards' , uniqueDivCards);
   // fetch the unique Accessories
-  const uniqueAccessories = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueAccessory&language=en').then(r => r.json())).lines;
-  const uniqueMaps = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueMap&language=en').then(r => r.json())).lines;
-  const uniqueFlasks = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueFlask&language=en').then(r => r.json())).lines;
-  const uniqueJewels = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueJewel&language=en').then(r => r.json())).lines;
-  const uniqueArmours = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueArmour&language=en').then(r => r.json())).lines;
-  const uniqueWeapons = (await fetch('https://poe.ninja/api/data/itemoverview?league=Metamorph&type=UniqueWeapon&language=en').then(r => r.json())).lines;
+  const uniqueAccessories = (await fetch('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueAccessory&language=en').then(r => r.json())).lines;
+  const uniqueMaps = (await fetch('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueMap&language=en').then(r => r.json())).lines;
+  const uniqueFlasks = (await fetch('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueFlask&language=en').then(r => r.json())).lines;
+  const uniqueJewels = (await fetch('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueJewel&language=en').then(r => r.json())).lines;
+  const uniqueArmours = (await fetch('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueArmour&language=en').then(r => r.json())).lines;
+  const uniqueWeapons = (await fetch('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueWeapon&language=en').then(r => r.json())).lines;
   const uniqueItems = [].concat(uniqueMaps, uniqueFlasks, uniqueJewels, uniqueAccessories, uniqueArmours, uniqueWeapons)
   .filter(item => !item.links) //both undefined and zero are allowed to cancel out 5 and 6 linked items
 
