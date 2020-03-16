@@ -67,6 +67,12 @@ async function getDivCardsAndItems(){
   const uniqueWeapons = (await fetch('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueWeapon&language=en').then(r => r.json())).lines;
   const uniqueItems = [].concat(uniqueMaps, uniqueFlasks, uniqueJewels, uniqueAccessories, uniqueArmours, uniqueWeapons)
   .filter(item => !item.links) //both undefined and zero are allowed to cancel out 5 and 6 linked items
+  .filter(item => item.name !== 'The Beachhead' || item.mapTier === 15)
+  .filter(item => item.name !== 'Mao Kun' || item.mapTier === 4)
+  .filter(item => item.name !== "Poorjoy's Asylum" || item.mapTier === 3)
+  .filter(item => item.name !== "The Putrid Cloister" || item.mapTier === 3)
+  .filter(item => item.name !== "The Twilight Temple" || item.mapTier === 3)
+  .filter(item => item.name !== "Vaults of Atziri" || item.mapTier === 3)
 
   // single out item
   const cardAndItemDatas = uniqueItems.map(function (uniqueItem, index) {
