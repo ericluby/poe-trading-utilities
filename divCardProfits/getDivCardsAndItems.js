@@ -79,6 +79,7 @@ async function getDivCardsAndItems(){
     const combinedItem = {
       name: uniqueItem.name,
       stackSize: uniqueItem.stackSize,
+      itemType: uniqueItem.baseType,
       chaos: Math.round(uniqueItem.chaosValue)
     };
     const matchingUniqueDivCard = uniqueDivCards.find(divCard => divCard.uniqueItem === combinedItem.name);
@@ -95,6 +96,7 @@ async function getDivCardsAndItems(){
       cardStack: matchingUniqueDivCard.stackSize,
       itemName: combinedItem.name,
       itemChaos: combinedItem.chaos,
+      itemType: combinedItem.itemType,
       stackChaos: divCardStackPrice,
       profitMargin,
       cardRaw: matchingUniqueDivCard.divCardRaw,
